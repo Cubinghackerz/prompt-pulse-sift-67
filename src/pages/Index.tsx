@@ -59,7 +59,7 @@ const Index = () => {
           >
             Prism Search
           </motion.h1>
-          <p className={`text-gray-300 max-w-lg mx-auto ${hasSearched ? 'hidden' : ''}`}>
+          <p className={`text-gray-100 max-w-lg mx-auto ${hasSearched ? 'hidden' : ''}`}>
             Search across the web's top engines for comprehensive results in one place
           </p>
         </motion.div>
