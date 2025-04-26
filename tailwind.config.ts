@@ -114,13 +114,17 @@ export default {
 				"pulse-light": "pulse-light 1.5s ease-in-out infinite",
 				"bounce-small": "bounce-small 1.5s ease-in-out infinite",
 				"gradient-shift": "gradient-shift 4s ease infinite",
-				'gradient-text': 'gradient-shift 3s ease infinite'
+				'gradient-text': 'gradient-shift 3s ease infinite',
+				'gradient-border': 'gradient-border 4s ease infinite',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
+			backgroundSize: {
+				'size-200': '200% 200%',
+			}
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
