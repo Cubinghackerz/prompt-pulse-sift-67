@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
@@ -139,7 +138,7 @@ const Index = () => {
                       engine === 'Brave' ? 'bg-orange-500/80' :
                       'bg-purple-500/80'} 
                     hover:border-white/20 transition-all duration-300
-                    animate-pulse-light shadow-lg hover:shadow-xl`}
+                    shadow-lg hover:shadow-xl`}
                   >
                     <span className="text-xl font-bold text-white">{engine.charAt(0)}</span>
                   </div>
