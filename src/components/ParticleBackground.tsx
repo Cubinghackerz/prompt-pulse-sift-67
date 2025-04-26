@@ -22,6 +22,7 @@ const ParticleBackground = () => {
     // Particle settings
     const particles: Particle[] = [];
     const particleCount = 50;
+    const particleColor = '#9b87f5'; // Consistent neon purple color
     
     class Particle {
       x: number;
@@ -29,20 +30,18 @@ const ParticleBackground = () => {
       speedX: number;
       speedY: number;
       size: number;
-      hue: number;
+
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
         this.speedX = Math.random() * 2 - 1;
         this.speedY = Math.random() * 2 - 1;
-        this.size = Math.random() * 3 + 1;
-        this.hue = Math.random() * 360;
+        this.size = Math.random() * 4 + 2; // Increased particle size
       }
 
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
-        this.hue = (this.hue + 0.5) % 360;
 
         if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
         if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
@@ -52,10 +51,15 @@ const ParticleBackground = () => {
         if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${this.hue}, 100%, 50%, 0.8)`;
+        ctx.fillStyle = particleColor;
         ctx.fill();
-        ctx.strokeStyle = `hsla(${this.hue}, 100%, 70%, 0.5)`;
+        
+        // Add glow effect
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = particleColor;
+        ctx.strokeStyle = particleColor;
         ctx.stroke();
+        ctx.shadowBlur = 0; // Reset shadow for next particle
       }
     }
 
@@ -67,7 +71,8 @@ const ParticleBackground = () => {
     // Animation loop
     let animationFrameId: number;
     const animate = () => {
-      ctx.fillStyle = 'rgba(26, 31, 44, 0.1)';
+      // Clear background with higher opacity to remove trails
+      ctx.fillStyle = 'rgba(26, 31, 44, 0.3)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       particles.forEach(particle => {
@@ -89,9 +94,10 @@ const ParticleBackground = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 -z-10"
+      className="fixed inset-0 -z-10 bg-[#1A1F2C]"
     />
   );
 };
 
 export default ParticleBackground;
+

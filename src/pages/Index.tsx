@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import SearchBar from '../components/SearchBar';
@@ -5,6 +6,8 @@ import SearchResults, { SearchResult } from '../components/SearchResults';
 import { searchAcrossEngines } from '../services/searchService';
 import { useToast } from '@/hooks/use-toast';
 import ParticleBackground from '../components/ParticleBackground';
+import ScrollToTop from '../components/ScrollToTop';
+import FooterWave from '../components/FooterWave';
 
 const Index = () => {
   const [query, setQuery] = useState('');
@@ -38,6 +41,7 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <ParticleBackground />
+      <ScrollToTop />
       
       <header className="py-6 px-4">
         <motion.div initial={{
@@ -71,47 +75,58 @@ const Index = () => {
           <SearchBar onSearch={handleSearch} isSearching={isSearching} expanded={hasSearched} />
         </div>
         
-        {hasSearched && <motion.div initial={{
-        opacity: 0
-      }} animate={{
-        opacity: 1
-      }} transition={{
-        duration: 0.5
-      }} className="mt-4">
+        {hasSearched && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="mt-4 backdrop-blur-md bg-white/5 p-6 rounded-xl border border-purple-500/20"
+          >
             <SearchResults results={results} isLoading={isSearching} query={query} />
-          </motion.div>}
+          </motion.div>
+        )}
 
-        {!hasSearched && <motion.div initial={{
-        opacity: 0
-      }} animate={{
-        opacity: 1
-      }} transition={{
-        delay: 0.5,
-        duration: 0.5
-      }} className="mt-20 text-center">
+        {!hasSearched && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+            className="mt-20 text-center"
+          >
             <div className="flex justify-center space-x-6">
-              {['Google', 'Bing', 'DuckDuckGo', 'Brave', 'You.com'].map(engine => <div key={engine} className="text-center">
-                  <div className={`w-14 h-14 rounded-full mx-auto mb-3 flex items-center justify-center ${
-                    engine === 'Google' ? 'bg-blue-500' :
-                    engine === 'Bing' ? 'bg-blue-700' :
-                    engine === 'DuckDuckGo' ? 'bg-yellow-600' :
-                    engine === 'Brave' ? 'bg-orange-500' :
-                    'bg-purple-500'
-                  }`}>
+              {['Google', 'Bing', 'DuckDuckGo', 'Brave', 'You.com'].map(engine => (
+                <motion.div 
+                  key={engine} 
+                  className="text-center"
+                  whileHover={{ scale: 1.1, y: -5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <div className={`w-14 h-14 rounded-full mx-auto mb-3 flex items-center justify-center 
+                    ${engine === 'Google' ? 'bg-blue-500' :
+                      engine === 'Bing' ? 'bg-blue-700' :
+                      engine === 'DuckDuckGo' ? 'bg-yellow-600' :
+                      engine === 'Brave' ? 'bg-orange-500' :
+                      'bg-purple-500'} 
+                    animate-pulse-light`}
+                  >
                     <span className="text-xl font-bold text-white">{engine.charAt(0)}</span>
                   </div>
                   <span className="text-sm font-medium text-gray-100">{engine}</span>
-                </div>)}
+                </motion.div>
+              ))}
             </div>
             <p className="mt-12 text-gray-400">Type your query above to search across all engines simultaneously</p>
-          </motion.div>}
+          </motion.div>
+        )}
       </main>
       
-      <footer className="py-6 text-center text-gray-500 text-sm">
-        <p>© 2025 Prism Search. All rights reserved.</p>
+      <footer className="relative py-6 text-center text-gray-500 text-sm">
+        <FooterWave />
+        <p className="relative z-10">© 2025 Prism Search. All rights reserved.</p>
       </footer>
     </div>
   );
 };
 
 export default Index;
+

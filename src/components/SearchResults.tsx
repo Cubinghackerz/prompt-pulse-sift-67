@@ -1,6 +1,6 @@
-
 import { motion } from 'framer-motion';
 import { LayoutGrid } from 'lucide-react';
+import { Skeleton } from "@/components/ui/skeleton";
 
 export interface SearchResult {
   id: string;
@@ -18,14 +18,13 @@ interface SearchResultsProps {
 
 const SearchResults = ({ results, isLoading, query }: SearchResultsProps) => {
   if (isLoading) {
-    return <SearchingAnimation query={query} />;
+    return <LoadingSkeleton query={query} />;
   }
 
   if (!results.length) {
     return null;
   }
 
-  // Group results by search engine
   const googleResults = results.filter(result => result.source === 'Google');
   const bingResults = results.filter(result => result.source === 'Bing');
   const duckduckgoResults = results.filter(result => result.source === 'DuckDuckGo');
@@ -34,9 +33,14 @@ const SearchResults = ({ results, isLoading, query }: SearchResultsProps) => {
 
   return (
     <div className="w-full max-w-[95vw] mx-auto mt-8 pb-12">
-      <div className="flex items-center gap-2 mb-6">
-        <LayoutGrid className="h-5 w-5 text-blue-600" />
-        <h2 className="text-xl font-semibold text-gray-100">Search Results</h2>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-2">
+          <LayoutGrid className="h-5 w-5 text-blue-600" />
+          <h2 className="text-xl font-semibold text-gray-100">Search Results</h2>
+        </div>
+        <div className="text-sm text-gray-400">
+          Found {results.length} results across all engines
+        </div>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
@@ -140,35 +144,25 @@ const SearchEngineColumn = ({ title, results, bgColor, hoverBorderColor }: Searc
   );
 };
 
-const SearchingAnimation = ({ query }: { query: string }) => {
+const LoadingSkeleton = ({ query }: { query: string }) => {
   return (
-    <div className="w-full max-w-4xl mx-auto mt-8">
-      <div className="text-center">
-        <h2 className="text-xl font-semibold mb-4 text-gray-100">Searching across engines...</h2>
-        <p className="text-gray-400 mb-6">Fetching results for: "{query}"</p>
-        
-        <div className="flex justify-center space-x-8">
-          {['Google', 'Bing', 'DuckDuckGo', 'Brave', 'You.com'].map((engine, index) => (
-            <div key={engine} className="flex flex-col items-center">
-              <div 
-                className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mb-3 animate-pulse-light"
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
-                <span className="text-xl font-bold text-gray-100">{engine.charAt(0)}</span>
-              </div>
-              <span className="text-sm font-medium text-gray-300">{engine}</span>
-              <div className="mt-2 flex space-x-1">
-                <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce-small" style={{ animationDelay: `${index * 0.1}s` }}></div>
-                <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce-small" style={{ animationDelay: `${index * 0.1 + 0.2}s` }}></div>
-                <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce-small" style={{ animationDelay: `${index * 0.1 + 0.4}s` }}></div>
-              </div>
+    <div className="w-full max-w-[95vw] mx-auto mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div key={i} className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-gray-800">
+            <div className="flex items-center gap-2 mb-4">
+              <Skeleton className="w-8 h-8 rounded-full" />
+              <Skeleton className="h-6 w-24" />
             </div>
-          ))}
-        </div>
-        
-        <div className="mt-16 w-full h-8 bg-white/10 rounded-full overflow-hidden">
-          <div className="h-full search-gradient animate-gradient-shift" style={{ width: '60%' }}></div>
-        </div>
+            
+            {Array.from({ length: 3 }).map((_, j) => (
+              <div key={j} className="mb-4">
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-3/4" />
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
     </div>
   );
