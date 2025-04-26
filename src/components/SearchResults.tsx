@@ -1,5 +1,6 @@
 
 import { motion } from 'framer-motion';
+import { LayoutGrid } from 'lucide-react';
 
 export interface SearchResult {
   id: string;
@@ -24,30 +25,78 @@ const SearchResults = ({ results, isLoading, query }: SearchResultsProps) => {
     return null;
   }
 
+  // Group results by search engine
+  const googleResults = results.filter(result => result.source === 'Google');
+  const bingResults = results.filter(result => result.source === 'Bing');
+  const duckduckgoResults = results.filter(result => result.source === 'DuckDuckGo');
+
   return (
-    <div className="w-full max-w-4xl mx-auto mt-8 pb-12">
-      <h2 className="text-xl font-semibold mb-4 text-gray-700">Search Results</h2>
+    <div className="w-full max-w-[95vw] mx-auto mt-8 pb-12">
+      <div className="flex items-center gap-2 mb-6">
+        <LayoutGrid className="h-5 w-5 text-blue-600" />
+        <h2 className="text-xl font-semibold text-gray-700">Search Results</h2>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Google Column */}
+        <SearchEngineColumn 
+          title="Google" 
+          results={googleResults}
+          bgColor="bg-blue-500"
+          hoverBorderColor="hover:border-blue-300"
+        />
+
+        {/* Bing Column */}
+        <SearchEngineColumn 
+          title="Bing" 
+          results={bingResults}
+          bgColor="bg-blue-700"
+          hoverBorderColor="hover:border-blue-400"
+        />
+
+        {/* DuckDuckGo Column */}
+        <SearchEngineColumn 
+          title="DuckDuckGo" 
+          results={duckduckgoResults}
+          bgColor="bg-yellow-600"
+          hoverBorderColor="hover:border-yellow-300"
+        />
+      </div>
+    </div>
+  );
+};
+
+interface SearchEngineColumnProps {
+  title: string;
+  results: SearchResult[];
+  bgColor: string;
+  hoverBorderColor: string;
+}
+
+const SearchEngineColumn = ({ title, results, bgColor, hoverBorderColor }: SearchEngineColumnProps) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-gray-200 shadow-lg"
+    >
+      <div className="flex items-center gap-2 mb-4">
+        <div className={`w-8 h-8 ${bgColor} rounded-full flex items-center justify-center`}>
+          <span className="text-white font-bold">{title[0]}</span>
+        </div>
+        <h3 className="text-lg font-semibold text-gray-700">{title}</h3>
+      </div>
+      
       <div className="space-y-4">
         {results.map((result, index) => (
           <motion.div
             key={result.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
-            className="result-card p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-300"
+            className={`result-card p-4 bg-white rounded-lg border border-gray-200 ${hoverBorderColor} transition-all duration-300`}
           >
-            <div className="flex items-center">
-              <div className={`w-6 h-6 rounded flex items-center justify-center mr-2 ${
-                result.source === 'Google' ? 'bg-blue-500' :
-                result.source === 'Bing' ? 'bg-blue-700' : 'bg-yellow-600'
-              }`}>
-                <span className="text-white text-xs font-bold">
-                  {result.source.charAt(0)}
-                </span>
-              </div>
-              <span className="text-xs font-medium text-gray-500">{result.source}</span>
-            </div>
-            
             <h3 className="text-lg font-medium text-blue-600 mt-1 hover:underline">
               <a href={result.url} target="_blank" rel="noopener noreferrer">
                 {result.title}
@@ -61,15 +110,20 @@ const SearchResults = ({ results, isLoading, query }: SearchResultsProps) => {
                 href={result.url}
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-xs text-gray-500 hover:text-blue-600"
+                className="text-xs text-gray-500 hover:text-blue-600 transition-colors"
               >
                 {result.url.length > 60 ? `${result.url.substring(0, 60)}...` : result.url}
               </a>
             </div>
           </motion.div>
         ))}
+        {results.length === 0 && (
+          <div className="text-center py-8 text-gray-500">
+            No results from {title}
+          </div>
+        )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
