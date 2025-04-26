@@ -1,3 +1,4 @@
+
 import { useState, KeyboardEvent } from 'react';
 import { Search } from 'lucide-react';
 
@@ -26,7 +27,7 @@ const SearchBar = ({ onSearch, isSearching, expanded }: SearchBarProps) => {
     <div className={`search-bar-container w-full max-w-3xl mx-auto transition-all duration-500 ${expanded ? 'search-bar-expanded' : ''}`}>
       <div className="relative">
         <div className="relative flex items-center w-full h-16 rounded-full 
-          bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 
+          bg-gradient-to-r from-indigo-500 via-purple-400 to-pink-400 
           bg-size-200 bg-pos-0 
           animate-gradient-slow
           p-[3px] 
@@ -41,7 +42,7 @@ const SearchBar = ({ onSearch, isSearching, expanded }: SearchBarProps) => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="peer h-full w-full outline-none text-lg text-gray-700 px-2 rounded-full bg-transparent"
+                className="peer h-full w-full outline-none text-lg text-gray-200 px-2 rounded-full bg-transparent"
                 type="text"
                 placeholder="Search across the web..."
                 disabled={isSearching}
@@ -52,8 +53,8 @@ const SearchBar = ({ onSearch, isSearching, expanded }: SearchBarProps) => {
                 className={`
                   absolute right-2 h-12 w-24 rounded-full text-white font-medium transition-all
                   ${query.trim() && !isSearching 
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer' 
-                    : 'bg-gray-300 cursor-not-allowed'}
+                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 cursor-pointer' 
+                    : 'bg-gray-600/50 cursor-not-allowed'}
                 `}
               >
                 {isSearching ? (
@@ -73,3 +74,4 @@ const SearchBar = ({ onSearch, isSearching, expanded }: SearchBarProps) => {
 };
 
 export default SearchBar;
+
