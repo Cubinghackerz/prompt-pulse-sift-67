@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import SearchBar from '../components/SearchBar';
 import SearchResults, { SearchResult } from '../components/SearchResults';
 import { searchAcrossEngines } from '../services/searchService';
 import { useToast } from '@/hooks/use-toast';
+import ParticleBackground from '../components/ParticleBackground';
 
 const Index = () => {
   const [query, setQuery] = useState('');
@@ -34,7 +35,10 @@ const Index = () => {
     }
   };
 
-  return <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#1A1F2C] to-[#221F26] dark:bg-gray-900">
+  return (
+    <div className="min-h-screen flex flex-col">
+      <ParticleBackground />
+      
       <header className="py-6 px-4">
         <motion.div initial={{
         opacity: 0,
@@ -106,7 +110,8 @@ const Index = () => {
       <footer className="py-6 text-center text-gray-500 text-sm">
         <p>© 2025 Prism Search. All rights reserved.</p>
       </footer>
-    </div>;
+    </div>
+  );
 };
 
 export default Index;
