@@ -4,6 +4,7 @@ import SearchBar from '../components/SearchBar';
 import SearchResults, { SearchResult } from '../components/SearchResults';
 import { searchAcrossEngines } from '../services/searchService';
 import { useToast } from '@/hooks/use-toast';
+
 const Index = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -12,6 +13,7 @@ const Index = () => {
   const {
     toast
   } = useToast();
+
   const handleSearch = async (searchQuery: string) => {
     try {
       setQuery(searchQuery);
@@ -31,6 +33,7 @@ const Index = () => {
       setIsSearching(false);
     }
   };
+
   return <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#1A1F2C] to-[#221F26] dark:bg-gray-900">
       <header className="py-6 px-4">
         <motion.div initial={{
@@ -59,7 +62,7 @@ const Index = () => {
         </motion.div>
       </header>
       
-      <main className="flex-1 px-4 container mx-auto max-w-[95vw]">
+      <main className="flex-1 px-4 container mx-auto max-w-[98vw]">
         <div className={`transition-all duration-500 ${hasSearched ? 'mt-4' : 'mt-28'}`}>
           <SearchBar onSearch={handleSearch} isSearching={isSearching} expanded={hasSearched} />
         </div>
@@ -82,15 +85,21 @@ const Index = () => {
         delay: 0.5,
         duration: 0.5
       }} className="mt-20 text-center">
-            <div className="flex justify-center space-x-8">
-              {['Google', 'Bing', 'DuckDuckGo'].map(engine => <div key={engine} className="text-center">
-                  <div className={`w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center ${engine === 'Google' ? 'bg-blue-100 text-blue-500' : engine === 'Bing' ? 'bg-blue-800 text-white' : 'bg-yellow-100 text-yellow-600'}`}>
-                    <span className="text-2xl font-bold">{engine.charAt(0)}</span>
+            <div className="flex justify-center space-x-6">
+              {['Google', 'Bing', 'DuckDuckGo', 'Brave', 'You.com'].map(engine => <div key={engine} className="text-center">
+                  <div className={`w-14 h-14 rounded-full mx-auto mb-3 flex items-center justify-center ${
+                    engine === 'Google' ? 'bg-blue-500' :
+                    engine === 'Bing' ? 'bg-blue-700' :
+                    engine === 'DuckDuckGo' ? 'bg-yellow-600' :
+                    engine === 'Brave' ? 'bg-orange-500' :
+                    'bg-purple-500'
+                  }`}>
+                    <span className="text-xl font-bold text-white">{engine.charAt(0)}</span>
                   </div>
-                  <span className="text-sm font-medium text-violet-100">{engine}</span>
+                  <span className="text-sm font-medium text-gray-100">{engine}</span>
                 </div>)}
             </div>
-            <p className="mt-12 text-gray-500">Type your query above to search across all engines simultaneously</p>
+            <p className="mt-12 text-gray-400">Type your query above to search across all engines simultaneously</p>
           </motion.div>}
       </main>
       
@@ -99,4 +108,5 @@ const Index = () => {
       </footer>
     </div>;
 };
+
 export default Index;
