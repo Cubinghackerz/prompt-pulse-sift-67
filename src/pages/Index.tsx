@@ -1,11 +1,9 @@
-
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SearchBar from '../components/SearchBar';
 import SearchResults, { SearchResult } from '../components/SearchResults';
 import { searchAcrossEngines } from '../services/searchService';
 import { useToast } from '@/hooks/use-toast';
-
 const Index = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -14,7 +12,6 @@ const Index = () => {
   const {
     toast
   } = useToast();
-
   const handleSearch = async (searchQuery: string) => {
     try {
       setQuery(searchQuery);
@@ -34,29 +31,26 @@ const Index = () => {
       setIsSearching(false);
     }
   };
-
-  return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#1A1F2C] to-[#221F26] dark:bg-gray-900">
+  return <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#1A1F2C] to-[#221F26] dark:bg-gray-900">
       <header className="py-6 px-4">
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center"
-        >
-          <motion.h1 
-            className={`text-4xl font-bold bg-clip-text text-transparent 
+        <motion.div initial={{
+        opacity: 0,
+        y: -20
+      }} animate={{
+        opacity: 1,
+        y: 0
+      }} transition={{
+        duration: 0.5
+      }} className="text-center">
+          <motion.h1 className={`text-4xl font-bold bg-clip-text text-transparent 
               bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 
-              animate-gradient-text mb-2 ${hasSearched ? 'text-2xl' : ''}`}
-            animate={{
-              backgroundPosition: ['0% 50%', '100% 50%'],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              repeatType: 'reverse'
-            }}
-          >
+              animate-gradient-text mb-2 ${hasSearched ? 'text-2xl' : ''}`} animate={{
+          backgroundPosition: ['0% 50%', '100% 50%']
+        }} transition={{
+          duration: 3,
+          repeat: Infinity,
+          repeatType: 'reverse'
+        }}>
             Prism Search
           </motion.h1>
           <p className={`text-gray-100 max-w-lg mx-auto ${hasSearched ? 'hidden' : ''}`}>
@@ -70,44 +64,39 @@ const Index = () => {
           <SearchBar onSearch={handleSearch} isSearching={isSearching} expanded={hasSearched} />
         </div>
         
-        {hasSearched && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="mt-4"
-          >
+        {hasSearched && <motion.div initial={{
+        opacity: 0
+      }} animate={{
+        opacity: 1
+      }} transition={{
+        duration: 0.5
+      }} className="mt-4">
             <SearchResults results={results} isLoading={isSearching} query={query} />
-          </motion.div>
-        )}
+          </motion.div>}
 
-        {!hasSearched && (
-          <motion.div initial={{
-            opacity: 0
-          }} animate={{
-            opacity: 1
-          }} transition={{
-            delay: 0.5,
-            duration: 0.5
-          }} className="mt-20 text-center">
+        {!hasSearched && <motion.div initial={{
+        opacity: 0
+      }} animate={{
+        opacity: 1
+      }} transition={{
+        delay: 0.5,
+        duration: 0.5
+      }} className="mt-20 text-center">
             <div className="flex justify-center space-x-8">
               {['Google', 'Bing', 'DuckDuckGo'].map(engine => <div key={engine} className="text-center">
                   <div className={`w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center ${engine === 'Google' ? 'bg-blue-100 text-blue-500' : engine === 'Bing' ? 'bg-blue-800 text-white' : 'bg-yellow-100 text-yellow-600'}`}>
                     <span className="text-2xl font-bold">{engine.charAt(0)}</span>
                   </div>
-                  <span className="text-sm font-medium text-gray-700">{engine}</span>
+                  <span className="text-sm font-medium text-violet-100">{engine}</span>
                 </div>)}
             </div>
             <p className="mt-12 text-gray-500">Type your query above to search across all engines simultaneously</p>
-          </motion.div>
-        )}
+          </motion.div>}
       </main>
       
       <footer className="py-6 text-center text-gray-500 text-sm">
         <p>&copy; {new Date().getFullYear()} MetaSearch. All rights reserved.</p>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
