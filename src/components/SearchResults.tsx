@@ -110,22 +110,22 @@ const SearchEngineColumn = ({ title, results, bgColor, hoverBorderColor }: Searc
             transition={{ duration: 0.3, delay: index * 0.1 }}
             className={`result-card p-4 bg-white/10 rounded-lg border border-gray-700 ${hoverBorderColor} transition-all duration-300 hover:bg-white/15`}
           >
-            <h3 className="text-sm font-medium text-blue-400 mt-1 hover:underline">
+            <h3 className="text-sm font-medium text-blue-400 mt-1 hover:underline line-clamp-2">
               <a href={result.url} target="_blank" rel="noopener noreferrer">
                 {result.title}
               </a>
             </h3>
             
-            <p className="text-xs text-gray-300 mt-1">{result.snippet}</p>
+            <p className="text-xs text-gray-300 mt-1 line-clamp-3">{result.snippet}</p>
             
-            <div className="mt-2">
+            <div className="mt-2 overflow-hidden">
               <a 
                 href={result.url}
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-xs text-gray-400 hover:text-blue-400 transition-colors"
+                className="text-xs text-gray-400 hover:text-blue-400 transition-colors block truncate"
               >
-                {result.url.length > 45 ? `${result.url.substring(0, 45)}...` : result.url}
+                {result.url}
               </a>
             </div>
           </motion.div>
