@@ -104,6 +104,11 @@ export default {
 					"0%": { backgroundPosition: "0% 50%" },
 					"50%": { backgroundPosition: "100% 50%" },
 					"100%": { backgroundPosition: "0% 50%" }
+				},
+				"gradient-border": {
+					"0%": { backgroundPosition: "0% 50%" },
+					"50%": { backgroundPosition: "100% 50%" },
+					"100%": { backgroundPosition: "0% 50%" }
 				}
 			},
 			animation: {
@@ -116,6 +121,7 @@ export default {
 				"gradient-shift": "gradient-shift 4s ease infinite",
 				'gradient-text': 'gradient-shift 3s ease infinite',
 				'gradient-border': 'gradient-border 4s ease infinite',
+				'gradient-slow': 'gradient-border 8s ease infinite',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

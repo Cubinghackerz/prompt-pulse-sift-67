@@ -1,4 +1,3 @@
-
 import { useState, KeyboardEvent } from 'react';
 import { Search } from 'lucide-react';
 
@@ -29,8 +28,8 @@ const SearchBar = ({ onSearch, isSearching, expanded }: SearchBarProps) => {
         <div className="relative flex items-center w-full h-16 rounded-full 
           bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 
           bg-size-200 bg-pos-0 
-          animate-gradient-border 
-          p-[2px] 
+          animate-gradient-slow
+          p-[3px] 
           transition-all duration-500 
           hover:bg-pos-100">
           <div className="w-full h-full bg-background rounded-full">
@@ -74,4 +73,3 @@ const SearchBar = ({ onSearch, isSearching, expanded }: SearchBarProps) => {
 };
 
 export default SearchBar;
-

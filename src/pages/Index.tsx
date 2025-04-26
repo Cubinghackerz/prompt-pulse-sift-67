@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SearchBar from '../components/SearchBar';
@@ -105,10 +104,9 @@ const Index = () => {
       </main>
       
       <footer className="py-6 text-center text-gray-500 text-sm">
-        <p>&copy; PrismSearch</p>
+        <p>© 2025 Prism Search. All rights reserved.</p>
       </footer>
     </div>;
 };
 
 export default Index;
-
