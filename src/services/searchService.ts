@@ -8,12 +8,14 @@ export const searchAcrossEngines = async (
 ): Promise<SearchResult[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
+      const encodedQuery = encodeURIComponent(query);
+      
       const mockResults: SearchResult[] = [
         // Google mock results
         {
           id: generateId(),
           title: `Google result for "${query}" - Official Website`,
-          url: `https://example.com/google-result-${encodeURIComponent(query)}`,
+          url: `https://www.google.com/search?q=${encodedQuery}`,
           snippet: `This is a comprehensive resource about ${query} from Google's search index.`,
           source: 'Google',
         },
@@ -22,7 +24,7 @@ export const searchAcrossEngines = async (
         {
           id: generateId(),
           title: `${query} - Latest News and Updates`,
-          url: `https://news.example.com/topics/${encodeURIComponent(query)}`,
+          url: `https://www.bing.com/search?q=${encodedQuery}`,
           snippet: `Stay updated with the latest information about ${query}.`,
           source: 'Bing',
         },
@@ -31,7 +33,7 @@ export const searchAcrossEngines = async (
         {
           id: generateId(),
           title: `${query} Explained Simply`,
-          url: `https://simpleguides.org/${encodeURIComponent(query)}`,
+          url: `https://duckduckgo.com/?q=${encodedQuery}`,
           snippet: `An easy-to-understand explanation of ${query} without unnecessary jargon.`,
           source: 'DuckDuckGo',
         },
@@ -40,7 +42,7 @@ export const searchAcrossEngines = async (
         {
           id: generateId(),
           title: `${query} - Brave Search Results`,
-          url: `https://brave.com/search/${encodeURIComponent(query)}`,
+          url: `https://search.brave.com/search?q=${encodedQuery}`,
           snippet: `Privacy-focused search results about ${query} from Brave Search.`,
           source: 'Brave',
         },
@@ -49,7 +51,7 @@ export const searchAcrossEngines = async (
         {
           id: generateId(),
           title: `${query} - AI-Enhanced Results`,
-          url: `https://you.com/search?q=${encodeURIComponent(query)}`,
+          url: `https://you.com/search?q=${encodedQuery}`,
           snippet: `AI-powered search results about ${query} with enhanced context.`,
           source: 'You.com',
         },
