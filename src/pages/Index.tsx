@@ -1,8 +1,9 @@
+
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import SearchBar from '../components/SearchBar';
 import SearchResults, { SearchResult } from '../components/SearchResults';
 import { searchAcrossEngines } from '../services/searchService';
-import { motion } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
@@ -35,7 +36,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-50">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#1A1F2C] to-[#221F26] dark:bg-gray-900">
       <header className="py-6 px-4">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
@@ -43,10 +44,22 @@ const Index = () => {
           transition={{ duration: 0.5 }}
           className="text-center"
         >
-          <h1 className={`text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800 mb-2 ${hasSearched ? 'text-2xl' : ''}`}>
+          <motion.h1 
+            className={`text-4xl font-bold bg-clip-text text-transparent 
+              bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 
+              animate-gradient-text mb-2 ${hasSearched ? 'text-2xl' : ''}`}
+            animate={{
+              backgroundPosition: ['0% 50%', '100% 50%'],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              repeatType: 'reverse'
+            }}
+          >
             Prism Search
-          </h1>
-          <p className={`text-gray-600 max-w-lg mx-auto ${hasSearched ? 'hidden' : ''}`}>
+          </motion.h1>
+          <p className={`text-gray-300 max-w-lg mx-auto ${hasSearched ? 'hidden' : ''}`}>
             Search across the web's top engines for comprehensive results in one place
           </p>
         </motion.div>

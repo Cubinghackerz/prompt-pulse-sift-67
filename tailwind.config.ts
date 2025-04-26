@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -114,7 +113,8 @@ export default {
 				"fade-out": "fade-out 0.3s ease-out",
 				"pulse-light": "pulse-light 1.5s ease-in-out infinite",
 				"bounce-small": "bounce-small 1.5s ease-in-out infinite",
-				"gradient-shift": "gradient-shift 4s ease infinite"
+				"gradient-shift": "gradient-shift 4s ease infinite",
+				'gradient-text': 'gradient-shift 3s ease infinite'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
