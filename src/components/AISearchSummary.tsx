@@ -11,34 +11,34 @@ interface AISearchSummaryProps {
 }
 
 const AISearchSummary = ({ results, query }: AISearchSummaryProps) => {
-  const [summary, setSummary] = useState<string>("");
+  const [answer, setAnswer] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const generateSummary = async () => {
-      if (!results.length) return;
+    const generateAnswer = async () => {
+      if (!results.length || !query) return;
       
       setIsLoading(true);
       setError(null);
       
       try {
         const { data, error } = await supabase.functions.invoke('generate-summary', {
-          body: { searchResults: results }
+          body: { searchResults: results, query }
         });
 
         if (error) throw error;
-        setSummary(data.summary);
+        setAnswer(data.answer);
       } catch (err) {
-        console.error('Error generating summary:', err);
-        setError('Failed to generate AI summary');
+        console.error('Error generating answer:', err);
+        setError('Failed to generate AI answer');
       } finally {
         setIsLoading(false);
       }
     };
 
-    generateSummary();
-  }, [results]);
+    generateAnswer();
+  }, [results, query]);
 
   if (!results.length) return null;
 
@@ -47,7 +47,7 @@ const AISearchSummary = ({ results, query }: AISearchSummaryProps) => {
       <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-purple-500/20">
         <div className="flex items-center gap-2 mb-4">
           <Bot className="h-5 w-5 text-purple-400" />
-          <h2 className="text-lg font-semibold text-gray-100">AI Summary</h2>
+          <h2 className="text-lg font-semibold text-gray-100">AI Response</h2>
         </div>
         
         {isLoading ? (
@@ -58,7 +58,7 @@ const AISearchSummary = ({ results, query }: AISearchSummaryProps) => {
         ) : error ? (
           <p className="text-red-400 text-sm">{error}</p>
         ) : (
-          <p className="text-gray-300 text-sm leading-relaxed">{summary}</p>
+          <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">{answer}</p>
         )}
       </div>
     </div>
@@ -66,3 +66,4 @@ const AISearchSummary = ({ results, query }: AISearchSummaryProps) => {
 };
 
 export default AISearchSummary;
+

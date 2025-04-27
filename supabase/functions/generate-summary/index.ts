@@ -14,20 +14,24 @@ serve(async (req) => {
   }
 
   try {
-    const { searchResults } = await req.json()
+    const { searchResults, query } = await req.json()
     
     const genAI = new GoogleGenerativeAI(Deno.env.get('GEMINI_API_KEY'));
-    // Updated to use the correct model name that's available in the API version
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const prompt = `Analyze these search results and provide a brief, insightful summary of the key findings across all sources. Search results: ${JSON.stringify(searchResults)}`;
+    const prompt = `As a helpful AI assistant, answer the following question: "${query}"
+    Use the information from these search results to provide a clear, direct answer:
+    ${JSON.stringify(searchResults)}
+    
+    If the search results don't contain enough relevant information to answer the question fully, acknowledge this and provide the best possible answer based on the available information.
+    Keep your response conversational and friendly, but concise and focused on answering the question.`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    const summary = response.text();
+    const answer = response.text();
 
     return new Response(
-      JSON.stringify({ summary }),
+      JSON.stringify({ answer }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
@@ -38,3 +42,4 @@ serve(async (req) => {
     )
   }
 })
+
