@@ -34,7 +34,7 @@ const SearchResults = ({ results, isLoading, query }: SearchResultsProps) => {
 
   return (
     <div className="w-full max-w-[95vw] mx-auto mt-8 pb-12">
-      <AISearchSummary results={results} query={query} />
+      <AISearchSummary />
       
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">

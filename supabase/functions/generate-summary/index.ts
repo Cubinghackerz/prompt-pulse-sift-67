@@ -14,17 +14,13 @@ serve(async (req) => {
   }
 
   try {
-    const { searchResults, query } = await req.json()
+    const { query } = await req.json()
     
     const genAI = new GoogleGenerativeAI(Deno.env.get('GEMINI_API_KEY'));
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const prompt = `As a helpful AI assistant, answer the following question: "${query}"
-    Use the information from these search results to provide a clear, direct answer:
-    ${JSON.stringify(searchResults)}
-    
-    If the search results don't contain enough relevant information to answer the question fully, acknowledge this and provide the best possible answer based on the available information.
-    Keep your response conversational and friendly, but concise and focused on answering the question.`;
+    const prompt = `As a helpful AI assistant, provide a friendly and informative answer to this question: "${query}"
+    Keep your response conversational and focused on answering the question.`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
@@ -42,4 +38,3 @@ serve(async (req) => {
     )
   }
 })
-
