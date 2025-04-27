@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { LayoutGrid } from 'lucide-react';
 import { Skeleton } from "@/components/ui/skeleton";
+import AISearchSummary from './AISearchSummary';
 
 export interface SearchResult {
   id: string;
@@ -33,6 +34,8 @@ const SearchResults = ({ results, isLoading, query }: SearchResultsProps) => {
 
   return (
     <div className="w-full max-w-[95vw] mx-auto mt-8 pb-12">
+      <AISearchSummary results={results} query={query} />
+      
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <LayoutGrid className="h-5 w-5 text-blue-600" />
