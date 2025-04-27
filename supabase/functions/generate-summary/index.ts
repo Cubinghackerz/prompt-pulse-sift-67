@@ -17,7 +17,8 @@ serve(async (req) => {
     const { searchResults } = await req.json()
     
     const genAI = new GoogleGenerativeAI(Deno.env.get('GEMINI_API_KEY'));
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    // Updated to use the correct model name that's available in the API version
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const prompt = `Analyze these search results and provide a brief, insightful summary of the key findings across all sources. Search results: ${JSON.stringify(searchResults)}`;
 
